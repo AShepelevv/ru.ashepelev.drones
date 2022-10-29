@@ -16,8 +16,8 @@ import static java.nio.file.Paths.get;
 import static java.util.Objects.requireNonNull;
 import static java.util.UUID.fromString;
 import static org.apache.commons.io.FilenameUtils.getBaseName;
-import static ru.ashepelev.drones.utils.RandomUtils.randomDouble;
-import static ru.ashepelev.drones.utils.RandomUtils.randomLowerString;
+import static ru.ashepelev.drones.utils.RandomUtils.randomPositiveDouble;
+import static ru.ashepelev.drones.utils.RandomUtils.randomLowerLetterString;
 
 public class V002__insert_test_data extends BaseJavaMigration {
     private JdbcTemplate jdbcTemplate;
@@ -37,8 +37,9 @@ public class V002__insert_test_data extends BaseJavaMigration {
         try {
             jdbcTemplate.update("insert into image values (?, ?)", imageId,
                     readAllBytes(f.toAbsolutePath()));
+            var medicationName =  randomLowerLetterString(17);
             jdbcTemplate.update("insert into medication values (?, ?, ?, ?)",
-                    randomLowerString().toUpperCase(), randomLowerString(), randomDouble(100.0), imageId);
+                    medicationName.toUpperCase(), medicationName, randomPositiveDouble(100.0), imageId);
         } catch (Exception e) {
             e.printStackTrace();
         }

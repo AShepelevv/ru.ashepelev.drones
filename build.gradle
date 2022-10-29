@@ -7,6 +7,10 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation 'org.flywaydb:flyway-core:6.4.3',
             'org.postgresql:postgresql:42.1.4',
@@ -16,6 +20,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.4'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.4',
+            'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
