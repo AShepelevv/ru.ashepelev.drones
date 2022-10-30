@@ -25,4 +25,10 @@ public class RandomUtils {
         if (scale < eps) scale += eps;
         return scale * limit;
     }
+
+    public static int randomPositiveInteger(int limit) {
+        if (limit <= 0) throw new IllegalArgumentException("Limit value must be greater than zero");
+        int value = random.nextInt(limit);
+        return abs(value == 0 ? 1 : value);
+    }
 }
