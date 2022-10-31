@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ashepelev.drones.entity.drone.Drone;
 import ru.ashepelev.drones.entity.drone.constants.DroneState;
+import ru.ashepelev.drones.entity.droneMedication.DroneMedicationRepository;
 import ru.ashepelev.drones.stub.entity.flight.Activity;
 import ru.ashepelev.drones.stub.entity.flight.ActivityRepository;
 import ru.ashepelev.drones.stub.entity.flight.constant.ActivityType;
@@ -24,6 +25,7 @@ import static ru.ashepelev.drones.utils.RandomUtils.randomPositiveInteger;
 @RequiredArgsConstructor
 public class DroneStateAutomataService implements DroneUpdateHandler {
     private final ActivityRepository activityRepository;
+    private final DroneMedicationRepository droneMedicationRepository;
 
     @Transactional
     @Override
@@ -40,7 +42,11 @@ public class DroneStateAutomataService implements DroneUpdateHandler {
             // Skip LOADED state
             case DELIVERING:
                 activityRepository.findByDroneSerialNumberAndType(drone.getSerialNumber(), FLIGHT)
-                        .ifPresent(activity -> checkIfExpiredAndSwitchToNewFlight(activity, drone, RETURNING));
+                        .ifPresent(activity -> {
+                            if (checkIfExpiredAndSwitchToNewFlight(activity, drone, RETURNING)) {
+                                droneMedicationRepository.deleteAll(drone.getDroneMedications());
+                            }
+                        });
                 return;
 
             // Skip DELIVERED state
@@ -57,11 +63,13 @@ public class DroneStateAutomataService implements DroneUpdateHandler {
         }
     }
 
-    private void checkIfExpiredAndSwitchToNewFlight(Activity activity, Drone drone, DroneState returning) {
+    private boolean checkIfExpiredAndSwitchToNewFlight(Activity activity, Drone drone, DroneState newState) {
         if (activity.getStartTimestamp().plusSeconds(activity.getDurationInSec()).isBefore(now())) {
-            drone.setState(returning);
+            drone.setState(newState);
             switchToDefaultFlight(activity);
+            return true;
         }
+        return false;
     }
 
     private void switchToDefaultFlight(Activity activity) {
