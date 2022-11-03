@@ -5,18 +5,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ashepelev.drones.dto.drone.DroneRegistrationDto;
 import ru.ashepelev.drones.entity.drone.Drone;
-import ru.ashepelev.drones.entity.drone.DroneRepository;
+
+import javax.persistence.EntityManager;
 
 import static ru.ashepelev.drones.entity.drone.constants.DroneState.IDLE;
 
 @Service
 @RequiredArgsConstructor
 public class DroneRegistrator {
-    private final DroneRepository droneRepository;
+    private final EntityManager entityManager;
 
     @Transactional
     public Boolean registerDrone(DroneRegistrationDto dto) {
-        droneRepository.save(Drone.builder()
+       entityManager.persist(Drone.builder()
                         .serialNumber(dto.getDroneSerialNumber())
                         .model(dto.getDroneModel())
                         .state(IDLE)

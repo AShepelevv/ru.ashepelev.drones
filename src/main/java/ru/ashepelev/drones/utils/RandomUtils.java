@@ -5,8 +5,10 @@ import java.util.Random;
 import static java.lang.Math.abs;
 import static java.lang.Math.floor;
 
-public class RandomUtils {
+public final class RandomUtils {
     private static final Random random = new Random();
+
+    private RandomUtils() {}
 
     public static String randomLowerLetterString(int length) {
         int leftLimit = 97; // letter 'a'

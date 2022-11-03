@@ -3,11 +3,13 @@ package ru.ashepelev.drones.dto.drone;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.ashepelev.drones.entity.drone.Drone;
 import ru.ashepelev.drones.entity.drone.constants.DroneModel;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class DroneDto {
     private String serialNumber;

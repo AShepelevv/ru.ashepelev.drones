@@ -27,7 +27,7 @@ public class DroneService {
 
     public List<DroneDto> getAvailable() {
         return filterAndMap(droneRepository.findAllByState(IDLE),
-                d -> of(d.getBatteryCapacity()).isGreaterOrEqualTo(minimumLoadingBatteryLevel),
+                d -> of(d.getBatteryCapacity()).isGreaterThan(minimumLoadingBatteryLevel),
                 DroneDto::from);
     }
 

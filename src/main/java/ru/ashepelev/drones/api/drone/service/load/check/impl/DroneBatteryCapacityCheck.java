@@ -25,7 +25,7 @@ public class DroneBatteryCapacityCheck implements DroneLoadingCheck {
                       List<MedicationLoadDto> medicationLoads,
                       Map<String, Medication> medicationsByCodes) {
         if (of(drone.getBatteryCapacity()).isLessThan(minimumLoadingBatteryLevel)) {
-            throw new IllegalStateException(format("Drone must have at least %f battery capacity to be loaded",
+            throw new IllegalStateException(format("Drone must have at least %.2f battery capacity to be loaded",
                     minimumLoadingBatteryLevel));
         }
     }

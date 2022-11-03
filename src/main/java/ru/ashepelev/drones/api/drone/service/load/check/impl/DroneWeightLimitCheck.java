@@ -24,7 +24,7 @@ public class DroneWeightLimitCheck implements DroneLoadingCheck {
                 .reduce(0.0, Double::sum);
 
         if (of(totalWeight).isGreaterThan(drone.getWeightLimit())) {
-            throw new IllegalArgumentException("Total weight of medication must be less that drone's weight limit");
+            throw new IllegalArgumentException("Total weight of medication must be less than drone's weight limit");
         }
     }
 }

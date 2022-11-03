@@ -22,22 +22,22 @@ public class Precision {
     }
 
     public boolean isLessThan(double another) {
-        return value <= another - accuracy;
+        return value < another - accuracy;
     }
 
     public boolean isLessOrEqualTo(double another) {
-        return value < another + accuracy;
+        return value <= another + accuracy;
     }
 
     public boolean isGreaterThan(double another) {
-        return value >= another + accuracy;
+        return value > another + accuracy;
     }
 
     public boolean isGreaterOrEqualTo(double another) {
-        return value > another - accuracy;
+        return value >= another - accuracy;
     }
 
     public boolean isEqualTo(double another) {
-        return abs(value - another) < accuracy;
+        return abs(value - another) <= accuracy;
     }
 }

@@ -5,11 +5,8 @@ import javax.validation.ConstraintValidatorContext;
 
 public class DroneSerialNumberValidator implements ConstraintValidator<DroneSerialNumber, String> {
     @Override
-    public void initialize(DroneSerialNumber constraintAnnotation) {
-    }
-
-    @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-       return value != null && !value.isEmpty() && value.length() <= 100;
+        if (value == null) return true;
+        return !value.isEmpty() && value.length() <= 100;
     }
 }
