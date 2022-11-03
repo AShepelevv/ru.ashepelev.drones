@@ -7,6 +7,8 @@ import ru.ashepelev.drones.entity.image.Image;
 import javax.persistence.*;
 import java.util.Set;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Getter
 @Setter
 @Builder
@@ -23,10 +25,12 @@ public class Medication {
     private String name;
     private double weight;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "medication")
     private Set<DroneMedication> droneMedications;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "imageId")
     private Image image;
 }

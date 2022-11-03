@@ -29,9 +29,11 @@ public class Drone {
     @Enumerated(STRING)
     private DroneState state;
 
-    private double weightLimit;
+    private Double weightLimit;
     private double batteryCapacity;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "drone")
     private Set<DroneMedication> droneMedications;
 }

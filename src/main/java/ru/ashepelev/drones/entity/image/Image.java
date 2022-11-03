@@ -27,6 +27,8 @@ public class Image {
 
     private byte[] data;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "image")
     private Set<Medication> medications;
 }
