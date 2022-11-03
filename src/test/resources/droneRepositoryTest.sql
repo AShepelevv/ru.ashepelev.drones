@@ -1,3 +1,4 @@
+truncate table drone cascade;
 insert into drone
 values ('A', 'Middleweight', 'IDLE', 100.0, 50.0),
        ('B', 'Middleweight', 'IDLE', 100.0, 100.0),
