@@ -11,6 +11,7 @@ import java.util.Set;
 import static javax.persistence.EnumType.STRING;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
