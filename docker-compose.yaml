@@ -1,10 +1,32 @@
 version: "3.9"
 services:
+  drones:
+    image: drones
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
   db:
     image: postgres:13.3
+    restart: always
     environment:
       POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
+      PG_DATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus:v2.21.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
+    depends_on:
+      - drones

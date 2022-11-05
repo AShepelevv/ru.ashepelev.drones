@@ -2,22 +2,22 @@ package ru.ashepelev.drones.api.drone.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.ashepelev.drones.dto.drone.DroneRegistrationDto;
 import ru.ashepelev.drones.entity.drone.Drone;
+import ru.ashepelev.drones.metrics.drone.DroneMetric;
 
-import javax.persistence.EntityManager;
+import javax.validation.constraints.NotNull;
 
 import static ru.ashepelev.drones.entity.drone.constants.DroneState.IDLE;
 
 @Service
 @RequiredArgsConstructor
 public class DroneRegistrator {
-    private final EntityManager entityManager;
+    private final DroneSaver droneSaver;
 
-    @Transactional
-    public Boolean registerDrone(DroneRegistrationDto dto) {
-       entityManager.persist(Drone.builder()
+    @DroneMetric
+    public Boolean registerDrone(@NotNull DroneRegistrationDto dto) {
+       droneSaver.save(Drone.builder()
                         .serialNumber(dto.getDroneSerialNumber())
                         .model(dto.getDroneModel())
                         .state(IDLE)
