@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 public @interface MedicationCode {
-    String message() default "Drone serial number must be not null, not empty and have a length of no more than 100 characters";
+    String message() default "Medication code must be not null, not empty and match to [A-Z0-9_]+";
 
     Class<?>[] groups() default {};
 

@@ -3,10 +3,8 @@ package ru.ashepelev.drones.api.drone;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.WebExchangeBindException;
 import ru.ashepelev.drones.api.common.Response;
 import ru.ashepelev.drones.api.drone.service.DroneRegistrator;
 import ru.ashepelev.drones.api.drone.service.DroneService;
@@ -18,15 +16,10 @@ import ru.ashepelev.drones.dto.medication.LoadedMedicationDto;
 import ru.ashepelev.drones.dto.medication.MedicationLoadDto;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static org.springframework.http.HttpStatus.*;
-import static ru.ashepelev.drones.api.common.Response.error;
 import static ru.ashepelev.drones.api.common.Response.success;
 
-@ControllerAdvice
 @RestController
 @RequestMapping("/api/drone")
 @RequiredArgsConstructor
@@ -74,28 +67,5 @@ public class DroneController {
             @Parameter(description = "Data about medications to load")
             @RequestBody @Valid List<MedicationLoadDto> loadData) {
         return success(droneLoader.load(droneSerialNumber, loadData));
-    }
-
-    @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Response<Object, String>> handleNotFound(NoSuchElementException ex) {
-        return new ResponseEntity<>(error(ex.getMessage()), NOT_FOUND);
-    }
-
-    @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler({
-            IllegalArgumentException.class,
-            IllegalStateException.class,
-            WebExchangeBindException.class,
-            ValidationException.class
-    })
-    public ResponseEntity<Response<Object, String>> handleBadRequest(RuntimeException ex) {
-        return new ResponseEntity<>(error(ex.getMessage()), BAD_REQUEST);
-    }
-
-    @ResponseStatus(INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response<Object, String>> handleException(Exception ex) {
-        return new ResponseEntity<>(error(ex.getMessage()), INTERNAL_SERVER_ERROR);
     }
 }
