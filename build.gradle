@@ -29,7 +29,8 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-actuator:2.7.5',
             'org.aspectj:aspectjrt:1.9.9.1',
             'commons-io:commons-io:2.11.0',
-            'javax.xml.bind:jaxb-api:2.3.1'
+            'javax.xml.bind:jaxb-api:2.3.1',
+            'org.springdoc:springdoc-openapi-ui:1.6.12'
 
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus:1.9.5'
     compileOnly 'org.projectlombok:lombok:1.18.24'
