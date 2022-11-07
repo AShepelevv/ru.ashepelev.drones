@@ -10,6 +10,7 @@ repositories {
 
 jib {
     to.image = 'drones'
+    from.image = 'openjdk:19'
 }
 
 build {

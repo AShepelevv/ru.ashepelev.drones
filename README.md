@@ -94,7 +94,7 @@ close our eyes to this.
 - For the same reason, I use the same DB for stub service data such as
 **Activity**: *FLIGHT* or *LOADING*.
 
-![](/Users/ashepelev/Documents/aleksey-shepelev/img/drone_state_automata.png)
+![](./img/drone_state_automata.png)
 
 ### Metrics service
 
