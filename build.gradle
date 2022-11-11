@@ -13,6 +13,14 @@ jib {
     from.image = 'openjdk:19'
 }
 
+processResources {
+    doFirst {
+        filesMatching('**/*.yaml') {
+            expand new File('.env').readLines().findAll { !it.empty }.collectEntries { it.split('=') }
+        }
+    }
+}
+
 build {
     dependsOn(tasks.jibDockerBuild)
 }
